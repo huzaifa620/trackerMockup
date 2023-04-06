@@ -8,9 +8,7 @@ import { motion } from "framer-motion"
 const Home = ({ navBar, setNavBar }) => {
 
   const [showImage, setShowImage] = useState(false);
-
   const videoRef = useRef(null);
-  const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -49,34 +47,18 @@ const Home = ({ navBar, setNavBar }) => {
     delaySpeed: 1000,
   })
 
-  const videoSrc = {
-    type: 'video',
-    sources: [
-      {
-        src: video,
-        type: 'video/mp4',
-      },
-    ],
-  };
-
   React.useEffect(() => {
     setNavBar([1, 0]);
   }, []);
 
   return (
-    <div className='mt-16 w-full h-screen flex items-center justify-center bg-[#d8ecf5] dark:bg-slate-900'>
+    <div className='mt-16 w-full h-screen flex items-center justify-center bg-[#e6f6fd] dark:bg-slate-900'>
 
       <div className='w-full lg:max-w-[90%] h-[90%] flex items-center space-x-6 p-6'>
 
-        <div className='w-1/2 h-fit'>
+        <div className='w-1/2 h-fit shadow-2xl'>
           <div className='rounded-2xl overflow-hidden'>
-            {/* <Plyr source={videoSrc}
-              ref={videoRef}
-              options={options}
-              onTimeUpdate={(e) => {
-                console.log(e.target.currentTime / e.target.duration);
-             }}
-            /> */}
+            
             <video ref={videoRef} controls>
               <source src={video} type="video/mp4" />
             </video>
@@ -93,26 +75,35 @@ const Home = ({ navBar, setNavBar }) => {
             transition={{ ease: 'linear', duration: 3 }}
             src='https://pbs.twimg.com/media/FHEkN7GWUA4Xyjt?format=jpg&name=small'
             alt=''
-            className='h-64 w-64 rounded-2xl'
+            className='h-64 w-64 rounded-3xl shadow-2xl'
           />
 
-          <div className='text-2xl font-bold'>
-            {name}
+          <div className='text-4xl font-extrabold'>
+            <span className='bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
+              {name}
+            </span>
           </div>
 
-          <div className='text-2xl font-bold'>
-            {age}
+          <div className='text-4xl font-extrabold'>
+            <span className='bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
+              {age}
+            </span>
           </div>
 
-          <div className='text-2xl font-bold'>
-            {gender}
+          <div className='text-4xl font-extrabold'>
+            <span className='bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
+              {gender}
+            </span>
           </div>
 
-          <div className='text-2xl font-bold'>
-            {org}
+          <div className='text-3xl font-extrabold'>
+            <span className='bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
+              {org}
+            </span>
           </div>
 
-          <div className='text-justify text-xl pt-8 w-[80%]'>
+
+          <div className='text-justify text-xl w-[90%] bg-white dark:bg-slate-400 p-8 rounded-3xl drop-shadow-2xl'>
             The bomber was identified as Shari Baloch, a 30-year-old female and secondary school science teacher from Kech District in Balochistan. She held bachelor's and master's degrees in education from the Allama Iqbal Open University, and had also obtained a master's degree in zoology from the University of Balochistan. She had reportedly enrolled in another postgraduate degree at the University of Karachi months before the attack, but was not reported to be a student there at the time.
           </div>
 
