@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Plyr from 'plyr-react';
 import 'plyr-react/plyr.css';
 import video from './video.mp4'
-import { Cursor, useTypewriter } from 'react-simple-typewriter'
-import { motion } from "framer-motion"
+import { useAnimation, motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const Home = ({ navBar, setNavBar }) => {
 
@@ -27,25 +26,28 @@ const Home = ({ navBar, setNavBar }) => {
     };
   }, []);
 
-  const [name, nameCount] = useTypewriter({
-    words: ["Shari Baloch"],
-    delaySpeed: 2000,
-  })
+  const controls = useAnimation();
+  const [ref, inView] = useInView();
 
-  const [age, ageCount] = useTypewriter({
-    words: ["Age: 30"],
-    delaySpeed: 2000,
-  })
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
 
-  const [gender, genderCount] = useTypewriter({
-    words: ["Female"],
-    delaySpeed: 2000,
-  })
-
-  const [org, orgCount] = useTypewriter({
-    words: ["Organization: Balochistan Liberation Army"],
-    delaySpeed: 1000,
-  })
+  const container = {
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { delayChildren: 1, staggerChildren: 0.5}
+    }
+  }
+  
+  const item = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 }
+  }
 
   React.useEffect(() => {
     setNavBar([1, 0]);
@@ -79,32 +81,32 @@ const Home = ({ navBar, setNavBar }) => {
               className='h-64 w-64 rounded-3xl shadow-2xl'
             />
 
-            <div className='flex flex-col justify-center px-2 space-y-1'>
+            <motion.div className='flex flex-col justify-center px-2 space-y-1' variants={container} ref={ref} initial={"hidden"} animate={controls}>
 
-              <div className='text-4xl font-extrabold bg-white w-fit p-2 pr-8 rounded-r-3xl'>
+              <motion.div variants={item} className='text-4xl font-extrabold bg-black dark:bg-white w-fit p-2 pr-8 rounded-r-3xl'>
                 <span className='bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
-                  {name}
+                  Shari Baloch
                 </span>
-              </div>
+              </motion.div>
 
-              <div className='text-4xl font-extrabold bg-white w-fit p-2 pr-8 rounded-r-3xl'>
+              <motion.div variants={item} className='text-4xl font-extrabold bg-black dark:bg-white w-fit p-2 pr-8 rounded-r-3xl'>
                 <span className='bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
-                  {age}
+                  Age: 30
                 </span>
-              </div>
+              </motion.div>
 
-              <div className='text-4xl font-extrabold bg-white w-fit p-2 pr-8 rounded-r-3xl'>
+              <motion.div variants={item} className='text-4xl font-extrabold bg-black dark:bg-white w-fit p-2 pr-8 rounded-r-3xl'>
                 <span className='bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
-                  {gender}
+                  Female
                 </span>
-              </div>
+              </motion.div>
 
-              <div className='text-2xl font-extrabold bg-white w-[75%] p-2 rounded-r-3xl'>
+              <motion.div variants={item} className='text-2xl font-extrabold bg-black dark:bg-white w-[75%] p-2 rounded-r-3xl'>
                 <span className='bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
-                  {org}
+                  Organization: Balochistan Liberation Army
                 </span>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
           </div>
           
@@ -113,7 +115,7 @@ const Home = ({ navBar, setNavBar }) => {
           </div>
 
         </div>
-        }
+      }
 
       </div>
 
